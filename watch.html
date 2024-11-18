@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    
+        body{
+            display: flex;
+            
+            align-items: center;
+            flex-direction: column;
+
+        }
+        .main{
+            height:300px;
+            width:300px;
+            border:2px solid black;
+            border-radius:50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .time{
+            font-size: 45px;
+        }
+        button{
+            margin: 20px;
+            width:80px;
+            height:30px;
+            border-radius: 5px;
+         
+        }
+        #bt1:hover{
+            background-color: greenyellow;
+            color: white;
+        }
+        #bt2:hover{
+          background-color: red;
+          color: white;
+        }
+        #bt3:hover{
+background-color: blue;
+color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+       <div class="time">00:00:00</div>
+    </div>
+    <div class="buttons">
+        <button id="bt1">Start</button>
+            <button id="bt2">Pause</button>
+                <button id="bt3">Reset</button>
+    </div>
+
+
+    <script>
+     let dis=document.querySelector('.time');
+     let str=document.getElementById('bt1');
+     let pau=document.getElementById('bt2');
+     let res=document.getElementById('bt3');
+
+     let msec=0;
+     let sec=0;
+     let min=0;
+
+     let timeid=null;
+
+     function updateDisplay() {
+        
+            dis.textContent = 
+                `${min.toString().padStart(2, '0')}:` +
+                `${sec.toString().padStart(2, '0')}:` +
+                `${msec.toString().padStart(2, '0')}`;
+        }
+
+        function start() {
+            if (!timeid) {
+                timeid = setInterval(() => {
+                    msec++;
+                    if (msec === 100) {
+                        msec = 0;
+                        sec++;
+                        if (sec === 60) {
+                            sec = 0;
+                            min++;
+                        }
+                    }
+                    updateDisplay();
+                }, 10); 
+            }
+        }
+
+     function pause(){
+        clearInterval(timeid);
+     }
+
+     function reset(){
+         clearInterval(timeid);
+         msec=0;
+         sec=0;
+         min=0;
+         updateDisplay();
+     }
+
+
+      str.addEventListener('click',start);
+        pau.addEventListener('click', pause);
+        res.addEventListener('click', reset);
+        
+        updateDisplay();
+    </script>
+</body>
+</html>
